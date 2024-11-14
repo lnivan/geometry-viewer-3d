@@ -1,4 +1,4 @@
-import Vectors
+from Vectors import *
 
 
 

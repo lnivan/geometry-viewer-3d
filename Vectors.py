@@ -1,3 +1,7 @@
+from math import sin, cos, pi
+
+
+
 class Vector2:
 
     def __init__(self, x, y):
@@ -15,6 +19,13 @@ class Vector2:
         return(self.components[index])
 
 
+    def __str__(self):
+
+        string = "(" + str(self.x) + " " +  str(self.y) + ")"
+
+        return(string)
+
+
     def __eq__(self, other):
         
         if self.components == other.components:
@@ -26,20 +37,26 @@ class Vector2:
     
     def __add__(self, other):
         
-        result = Vector2(self.x+other.x, self.y+other.y)
+        result = Vector2(self[0]+other[0], self[1]+other[1])
         return(result)
 
 
     def __sub__(self, other):
 
-        result = Vector2(self.x-other.x, self.y-other.y)
+        result = Vector2(self[0]-other[0], self[1]-other[1])
         return(result)
 
     
     def __mul__(self, other):
 
         if type(other) == Vector2:
-            result = self.x*other.x + self.y*other.y
+            result = self[0]*other[0] + self[1]*other[1]
+            return(result)
+
+        elif type(other) == Matrix:
+            result_x = self*other[-1, 0]
+            result_y = self*other[-1, 1]
+            result = Vector2(result_x, result_y)
             return(result)
 
         else:
@@ -76,6 +93,13 @@ class Vector3:
     def __getitem__(self, index):
 
         return(self.components[index])
+
+
+    def __str__(self):
+
+        string = "(" + str(self.x) + " " +  str(self.y) + " " + str(self.z) + ")"
+
+        return(string)
     
 
     def __eq__(self, other):
@@ -89,20 +113,27 @@ class Vector3:
     
     def __add__(self, other):
         
-        result = Vector3(self.x+other.x, self.y+other.y, self.z+other.z)
+        result = Vector3(self[0]+other[0], self[1]+other[1], self[2]+other[2])
         return(result)
 
 
     def __sub__(self, other):
 
-        result = Vector3(self.x-other.x, self.y-other.y, self.z-other.z)
+        result = Vector3(self[0]-other[0], self[1]-other[1], self[2]-other[2])
         return(result)
 
     
     def __mul__(self, other):
 
-        if type(other) == Vector2:
-            result = self.x*other.x + self.y*other.y + self.z*other.z
+        if type(other) == Vector3 or type(other) == VectorN:
+            result = self[0]*other[0] + self[1]*other[1] + self[2]*other[2]
+            return(result)
+
+        elif type(other) == Matrix:
+            result_x = self*other[-1, 0]
+            result_y = self*other[-1, 1]
+            result_z = self*other[-1, 2]
+            result = Vector3(result_x, result_y, result_z)
             return(result)
 
         else:
@@ -136,9 +167,21 @@ class VectorN:
 
         self.size = len(self.components)
 
+
     def __getitem__(self, index):
 
         return(self.components[index])
+
+
+    def __str__(self):
+
+        string = "("
+        for i in range(self.size-1):
+            string = string + str(self.components[i]) + " "
+        string = string + str(self.components(self.size-1)) + ")"
+
+        return(string)
+
     
 
     def __eq__(self, other):
@@ -172,6 +215,13 @@ class VectorN:
             result = 0
             for i in range(self.size):
                 result = result + self[i] * other[i]
+            return(result)
+
+        elif type(other) == Matrix:
+            result_components = []
+            for i in range(self.size):
+                result_components.append(self*Matrix[-1, i])
+            result = VectorN(result_components)
             return(result)
 
         else:
@@ -274,17 +324,24 @@ class Matrix:
         return(Matrix(result))
 
 
-a=Matrix([[1,2,3,4],
-          [5,6,7,8],
-          [9,0,1,2]])
+    @staticmethod
+    def rotation3D(coordinate, angle):
 
-b=Matrix([[0,9,8],
-          [6,5,4],
-          [2,1,0],
-          [1,2,3]])
+        angle = (angle*2*pi)/360
 
+        if coordinate == "x":
+            result = Matrix([[1, 0         , 0          ],
+                             [0, cos(angle), -sin(angle)],
+                             [0, sin(angle), cos(angle) ]])
 
-print(a)
-print(b)
+        elif coordinate == "y":
+            result = Matrix([[cos(angle) , 0, sin(angle)],
+                             [0          , 1, 0         ],
+                             [-sin(angle), 0, cos(angle)]])
 
-print(a*b)
+        else:
+            result = Matrix([[cos(angle), -sin(angle), 0],
+                             [sin(angle), cos(angle) , 0],
+                             [0         , 0          , 1]])
+
+        return(result)
