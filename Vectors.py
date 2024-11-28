@@ -137,13 +137,13 @@ class Vector3:
             return(result)
 
         else:
-            result = Vector2(self.x*other, self.y*other, self.z*other)
+            result = Vector3(self.x*other, self.y*other, self.z*other)
             return(result)
 
 
     def __truediv__(self, other):
 
-        result = Vector2(self.x/other, self.y/other, self.z/other)
+        result = Vector3(self.x/other, self.y/other, self.z/other)
         return(result)
 
     
@@ -325,7 +325,7 @@ class Matrix:
 
 
     @staticmethod
-    def rotation3D(coordinate, angle):
+    def rotation_3D(coordinate, angle):
 
         angle = (angle*2*pi)/360
 
