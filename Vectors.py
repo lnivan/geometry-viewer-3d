@@ -60,7 +60,7 @@ class Vector2:
             return(result)
 
         else:
-            result = Vector2(self.x*other.x, self.y*other.y)
+            result = Vector2(self.x*other, self.y*other)
             return(result)
 
 
@@ -345,3 +345,12 @@ class Matrix:
                              [0         , 0          , 1]])
 
         return(result)
+    
+
+
+x_unit_2D = Vector2(1, 0)
+y_unit_2D = Vector2(0, 1)
+
+x_unit_3D = Vector3(1, 0, 0)
+y_unit_3D = Vector3(0, 1, 0)
+z_unit_3D = Vector3(0, 0, 1)

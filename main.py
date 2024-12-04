@@ -20,12 +20,18 @@ while running == True:
         if event.type == pygame.QUIT:
             running = False
 
+    render3D.update(events)
+
+
     window.fill((100, 100, 100))
     render3D.refresh()
-    render3D.draw_point(Vector3(10, 0, 5))
-    render3D.draw_point(Vector3(20, 0, 5))
-    render3D.draw_point(Vector3(10, 0, -5))
+    render3D.draw_point(Vector3(10, 10, 5))
+    render3D.draw_point(Vector3(20, 10, 5))
+    render3D.draw_point(Vector3(10, 10, -5))
+    render3D.draw_point(Vector3(20, 10, -5))    
+    render3D.draw_point(Vector3(10, -10, 5))
+    render3D.draw_point(Vector3(20, -10, 5))
+    render3D.draw_point(Vector3(10, -10, -5))
+    render3D.draw_point(Vector3(20, -10, -5))
     
     pygame.display.flip()
-
-    render3D.camera_position = render3D.camera_position + Vector3(0, 0.01, 0)
