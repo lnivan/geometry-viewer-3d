@@ -69,7 +69,7 @@ python main.py
 - Projected points are not clipped to the viewport. A point in front of the camera but outside the 120° field of view is drawn on the grey area around it.
 - Camera-space y is drawn to the right while x points forward and z up, so the picture is the mirror image of a right-handed scene.
 - Movement and turning are fixed steps per frame and the loop has no `Clock.tick`, so speed depends on the machine and one CPU core stays busy.
-- Two `VectorN` methods are broken: multiplying by a matrix indexes the class `Matrix` instead of the argument, and `__str__` calls the component list as if it were a function. Because -1 is the wildcard index, the last row or column of a matrix cannot be reached as `-1`.
+- Only `Vector3` can be multiplied by a matrix. `Vector2` fails because it tries to scale its components by a `VectorN` column, and `VectorN` indexes the class `Matrix` instead of the argument. `VectorN.__str__` is also broken: it calls the component list as if it were a function. Because -1 is the wildcard index, the last row or column of a matrix cannot be reached as `-1`.
 
 ## Background
 
