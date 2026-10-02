@@ -37,8 +37,8 @@ class Render3D:
     def screen_position(self, position):
 
         relative_position = (position - self.camera_position)
-        relative_position = relative_position * Matrix.rotation_3D("y", -self.camera_rotation.y)
         relative_position = relative_position * Matrix.rotation_3D("z", -self.camera_rotation.x)
+        relative_position = relative_position * Matrix.rotation_3D("y", -self.camera_rotation.y)
 
         if relative_position.x > 0:
             screen_position = relative_position / relative_position.x * self.screen_distance
@@ -52,6 +52,17 @@ class Render3D:
 
 
     def draw_point(self, position):
+
+        screen_position = self.screen_position(position)
+
+        if screen_position:
+            coordinate = self.position + screen_position + self.size/2
+            coordinate = self.to_pygame_coordinates(coordinate)
+
+            pygame.draw.circle(self.window, self.white, coordinate.components, 2)
+
+
+    def draw_line(self, position1, position2):
 
         screen_position = self.screen_position(position)
 
@@ -131,7 +142,7 @@ class Render3D:
         rotation_ammount = Vector2(rotation_ammount[0], rotation_ammount[1])*self.mouse_rotating + self.arrow_rotation
         self.camera_rotation = self.camera_rotation + (rotation_ammount/10) 
 
-        camera_movement_rotated = self.camera_movement * Matrix.rotation_3D("z", self.camera_rotation.x)
-        camera_movement_rotated = camera_movement_rotated * Matrix.rotation_3D("y", self.camera_rotation.y)
+        camera_movement_rotated = self.camera_movement * Matrix.rotation_3D("y", self.camera_rotation.y)
+        camera_movement_rotated = camera_movement_rotated * Matrix.rotation_3D("z", self.camera_rotation.x)
         self.camera_position = self.camera_position + camera_movement_rotated * self.camera_speed
         
