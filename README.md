@@ -7,7 +7,6 @@
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Pygame](https://img.shields.io/badge/Pygame-2.x-30363D?style=flat-square)
 ![Status](https://img.shields.io/badge/status-prototype-BF8700?style=flat-square)
-![Year](https://img.shields.io/badge/year-2024-8250DF?style=flat-square)
 
 <img src="docs/preview.gif" alt="Eight white dots, the corners of a box, shifting in perspective as the camera circles around them in a black viewport" width="560">
 
@@ -70,10 +69,6 @@ python main.py
 - Camera-space y is drawn to the right while x points forward and z up, so the picture is the mirror image of a right-handed scene.
 - Movement and turning are fixed steps per frame and the loop has no `Clock.tick`, so speed depends on the machine and one CPU core stays busy.
 - Only `Vector3` can be multiplied by a matrix. `Vector2` fails because it tries to scale its components by a `VectorN` column, and `VectorN` indexes the class `Matrix` instead of the argument. `VectorN.__str__` is also broken: it calls the component list as if it were a function. Because -1 is the wildcard index, the last row or column of a matrix cannot be reached as `-1`.
-
-## Background
-
-Written between 13 November and 4 December 2024, according to the git history, in a folder named `diedrico`. That is the Spanish name for the dihedral (Monge) projection system of descriptive geometry. Only the 3D view was built.
 
 ---
 
